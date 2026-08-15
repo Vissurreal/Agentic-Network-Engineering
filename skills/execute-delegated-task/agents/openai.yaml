@@ -1,0 +1,7 @@
+interface:
+  display_name: "Execute with delegated agents"
+  short_description: "Complete tasks through bounded workers"
+  default_prompt: "Complete this task using useful delegated workers, integrate their results, and run independent QA."
+
+policy:
+  allow_implicit_invocation: true

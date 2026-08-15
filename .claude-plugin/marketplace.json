@@ -1,0 +1,29 @@
+{
+  "name": "agentic-engineering",
+  "owner": {
+    "name": "Liam"
+  },
+  "metadata": {
+    "description": "Executes substantive tasks through bounded delegated agents and designs project-specific agent environments.",
+    "version": "0.3.2"
+  },
+  "plugins": [
+    {
+      "name": "agentic-engineering",
+      "source": "./",
+      "description": "Completes research, coding, analysis, writing, and other substantive tasks through bounded workers and independent QA; also derives and transactionally emits validated Claude Code and Codex agent environments.",
+      "category": "workflow",
+      "keywords": [
+        "agents",
+        "delegation",
+        "orchestration",
+        "research",
+        "graph-engineering",
+        "harness-engineering",
+        "codex",
+        "a2a",
+        "code-review"
+      ]
+    }
+  ]
+}

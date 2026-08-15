@@ -1,0 +1,77 @@
+[
+  {
+    "name": "screenshot research to Obsidian",
+    "prompt": "@agentic-engineering Research – and put your notes in my obsidian vault – on lasers replacing missile interceptors (are they cost efficient? is the technology effective?)",
+    "explicit": true,
+    "task_kind": "research",
+    "skill": "execute-delegated-task",
+    "roles": [
+      "task-researcher",
+      "task-reviewer"
+    ]
+  },
+  {
+    "name": "implementation task",
+    "prompt": "@agentic-engineering Fix the parser, add regression tests, and update the plugin documentation.",
+    "explicit": true,
+    "task_kind": "implementation",
+    "skill": "execute-delegated-task",
+    "roles": [
+      "task-implementer",
+      "task-reviewer"
+    ]
+  },
+  {
+    "name": "network design remains specialized",
+    "prompt": "@agentic-engineering Design an agent network for this repository and show the preflight diff.",
+    "explicit": true,
+    "task_kind": "network-design",
+    "skill": "design-agent-network",
+    "roles": [
+      "network-architect"
+    ]
+  },
+  {
+    "name": "generic delegated writing",
+    "prompt": "@agentic-engineering Draft the requested project brief and save it in the supplied destination.",
+    "explicit": true,
+    "task_kind": "general",
+    "skill": "execute-delegated-task",
+    "roles": [
+      "task-worker",
+      "task-reviewer"
+    ]
+  },
+  {
+    "name": "implicit research classification",
+    "prompt": "Research primary sources for this policy question.",
+    "explicit": false,
+    "task_kind": "research",
+    "skill": "execute-delegated-task",
+    "roles": [
+      "task-researcher",
+      "task-reviewer"
+    ]
+  },
+  {
+    "name": "named execution skill overrides network keywords",
+    "prompt": "$agentic-engineering:execute-delegated-task Analyze this agent network and write a report.",
+    "explicit": true,
+    "task_kind": "analysis",
+    "skill": "execute-delegated-task",
+    "roles": [
+      "task-researcher",
+      "task-reviewer"
+    ]
+  },
+  {
+    "name": "named design skill overrides research keywords",
+    "prompt": "$agentic-engineering:design-agent-network Research and design the agent topology for this repository.",
+    "explicit": true,
+    "task_kind": "network-design",
+    "skill": "design-agent-network",
+    "roles": [
+      "network-architect"
+    ]
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "agentic.review-verdict/v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "task_id",
+    "round",
+    "request_digest",
+    "reviewer_id",
+    "disposition",
+    "findings",
+    "checked_clean",
+    "checked_files",
+    "stop_condition_met",
+    "created_at",
+    "verdict_digest"
+  ],
+  "properties": {
+    "schema": { "const": "agentic.review-verdict/v1" },
+    "task_id": { "type": "string", "minLength": 1 },
+    "round": { "type": "integer", "minimum": 1 },
+    "request_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "reviewer_id": { "type": "string", "minLength": 1 },
+    "disposition": { "enum": ["PASS", "FAIL", "BLOCKED"] },
+    "findings": { "type": "array", "items": { "type": "object" } },
+    "checked_clean": { "type": "array", "items": { "type": "string" } },
+    "checked_files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": {
+            "oneOf": [
+              { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+              { "type": "null" }
+            ]
+          }
+        }
+      }
+    },
+    "stop_condition_met": { "type": "boolean" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "verdict_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+  }
+}

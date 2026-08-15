@@ -1,0 +1,19 @@
+{
+  "name": "agentic-engineering",
+  "displayName": "Agentic Engineering",
+  "version": "0.3.2",
+  "description": "Executes substantive tasks through bounded delegated workers and independent QA, and separately derives project-specific Claude Code and Codex agent environments.",
+  "author": {
+    "name": "Liam"
+  },
+  "keywords": [
+    "agents",
+    "delegation",
+    "orchestration",
+    "research",
+    "graph-engineering",
+    "harness-engineering",
+    "codex",
+    "a2a"
+  ]
+}

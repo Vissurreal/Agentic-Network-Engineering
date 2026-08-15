@@ -1,0 +1,228 @@
+# Version 2 logical network specification.
+# This example is a staged, mechanically verifiable implementation pipeline.
+# Its environment section is an illustrative verified probe result; a generated
+# project must replace those values with its own current probe evidence.
+# It is not a topology lookup by "complexity": every structural choice follows
+# from the orthogonal decision vector and a named failure mode.
+
+version: 2
+
+project:
+  name: example-project
+  domain: software
+  guidance:
+    description: Build the approved change without losing the user's intent or existing project configuration.
+    completion_criteria:
+      - The requested behavior is implemented.
+      - The project test command passes.
+      - Review evidence is bound to the final file contents.
+    conventions:
+      - Preserve unrelated user-authored content.
+      - Prefer deterministic checks over subjective confidence.
+    commands:
+      - purpose: Test
+        command: python tests/run.py
+
+decision:
+  path_predictability: known
+  workstreams: 1
+  coupling: staged
+  information_volume: bounded
+  search_breadth: bounded
+  external_retrieval: false
+  ground_truth: mechanical
+  reversibility: reversible
+  consequence: material
+  delegation_depth: 1
+  human_gates: [approve-network, approve-conflicts]
+  context_isolation: cross-vendor
+
+selection:
+  pattern: pipeline
+  rationale: The implementation and evidence path are known, while an independent review removes self-approval.
+  deviation_rationale: null
+  alternatives_rejected:
+    - pattern: direct
+      reason: The producer would otherwise be the only evaluator of its changes.
+    - pattern: fan-out
+      reason: The single staged workstream has no independent partitions.
+    - pattern: adaptive-harness
+      reason: The valid path is known before execution.
+  assumptions:
+    - The listed test command is the mechanical source of truth.
+
+environment:
+  git: true
+  python_command: python
+  test_command: python tests/run.py
+  languages: [python]
+  claude:
+    installed: true
+    authenticated: true
+    version: 2.1.220
+    models: [haiku, sonnet, opus, fable]
+  codex:
+    installed: true
+    authenticated: true
+    version: 0.145.0
+    mcp_available: true
+    mcp_tools: [codex, codex-reply]
+    model_access: verified
+    models: [gpt-5.6-sol]
+
+runtime:
+  max_concurrency: 3
+  max_depth: 2
+  retry:
+    max_attempts: 1
+    backoff: linear
+  cancellation: cooperative
+  checkpoint: per-task
+  recovery: resume-latest
+  claude:
+    dispatcher_model: opus
+    dispatcher_effort: high
+  codex:
+    sandbox: read-only
+    approval_policy: never
+
+topology:
+  mode: graph
+  invocation_policy: descriptive
+  entry_agent: orchestrator
+  graph:
+    edges:
+      - from: human
+        to: orchestrator
+        message: Approved project intent and acceptance criteria.
+        condition: always
+      - from: orchestrator
+        to: implementer
+        message: Bounded task with acceptance criteria.
+        condition: implementation is required
+      - from: orchestrator
+        to: reviewer
+        message: Content-addressed review request.
+        condition: the producer returns changed artifacts
+      - from: orchestrator
+        to: arbiter
+        message: Request, verdict history, and disputed evidence.
+        condition: a mechanical dispute remains after the round cap
+  a2a:
+    transport: codex-mcp
+    request_schema: agentic.review-request/v1
+    response_schema: agentic.review-verdict/v1
+    continuation: true
+    timeout_seconds: 600
+    max_retries: 1
+
+agents:
+  - id: orchestrator
+    role: Holds the approved intent, decomposes it, and dispatches bounded work.
+    rank: lead
+    provider: anthropic
+    model: fable
+    via: native
+    effort: high
+    count: 1
+    default_active: true
+    max_turns: 40
+    context_budget_tokens: 120000
+    memory: project
+    isolation: shared
+    tools: [Read, Glob, Grep, Agent]
+    invocable_by: [human]
+    reports_to: human
+    produces_changes: false
+    accepts: Approved intent, decision vector, assumptions, and human constraints.
+    produces: Bounded dispatches, review requests, and a final evidence summary.
+    prevents: The implementation drifting because no role retained the original intent.
+    prose: Supply the gate's risk threshold and stop condition verbatim. Escalate conflicts that cannot be resolved from the declared evidence.
+
+  - id: implementer
+    role: Produces the requested project change.
+    rank: worker
+    provider: anthropic
+    model: opus
+    via: native
+    effort: high
+    count: 1
+    default_active: true
+    max_turns: 80
+    context_budget_tokens: 180000
+    memory: project
+    isolation: worktree
+    tools: [Read, Glob, Grep, Write, Edit, Bash]
+    invocable_by: [orchestrator]
+    reports_to: orchestrator
+    produces_changes: true
+    accepts: A bounded task with executable acceptance criteria.
+    produces: A changed artifact, test evidence, and a precise file list.
+    prevents: The approved project remaining unimplemented.
+    prose: Keep changes inside the dispatch scope. Return the evidence required by each acceptance criterion and identify any criterion that cannot be established.
+
+  - id: reviewer
+    role: Performs independent adversarial review against the approved criteria.
+    rank: reviewer
+    provider: openai
+    model: gpt-5.6-sol
+    via: codex-mcp
+    effort: high
+    count: 1
+    default_active: true
+    max_turns: 30
+    context_budget_tokens: 120000
+    memory: none
+    isolation: cross-vendor
+    tools: []
+    invocable_by: [orchestrator]
+    reports_to: orchestrator
+    produces_changes: false
+    accepts: A self-contained agentic.review-request/v1 document.
+    produces: An agentic.review-verdict/v1 document bound to the request and file hashes.
+    prevents: The producer approving its own work or reusing stale evidence.
+    prose: Report only findings at or above the supplied threshold. Mechanical findings require a reproduction. Return BLOCKED when the request cannot be evaluated.
+
+  - id: arbiter
+    role: Resolves a bounded mechanical dispute after the review round cap.
+    rank: arbiter
+    provider: anthropic
+    model: fable
+    via: native
+    effort: high
+    count: 1
+    default_active: true
+    max_turns: 20
+    context_budget_tokens: 80000
+    memory: none
+    isolation: read-only
+    tools: [Read, Glob, Grep]
+    invocable_by: [orchestrator]
+    reports_to: orchestrator
+    produces_changes: false
+    accepts: The request digest, verdict history, and mechanically reproducible dispute.
+    produces: A reasoned ruling or an explicit escalation to the human.
+    prevents: Evidence-resolvable disagreement consuming unbounded review rounds.
+    prose: Rule only from the declared evidence. Escalate when the available evidence cannot decide the disagreement.
+
+review_protocol:
+  request_schema: agentic.review-request/v1
+  verdict_schema: agentic.review-verdict/v1
+  authority:
+    mode: advisory-local
+    endpoint: null
+    project_id: example-project
+    fail_closed: false
+    human_override: AGENTIC_SKIP_REVIEW
+  gates:
+    - id: implementation-review
+      produced_by: implementer
+      reviewed_by: reviewer
+      unit: task
+      evidence: mechanical
+      risk_threshold: high
+      stop_condition: One complete pass and no more than seven findings.
+      max_rounds: 2
+      arbiter: arbiter
+      on_deadlock: human
+      authority: advisory

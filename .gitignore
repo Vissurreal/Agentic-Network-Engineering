@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.agentic/
+# fixture output, if make_fixtures.py is ever run outside a temp dir
+/0*.yaml
+/probe-*.json

@@ -1,0 +1,35 @@
+{
+  "name": "agentic-engineering",
+  "version": "0.3.1+codex.20260728194349",
+  "description": "Executes substantive tasks through bounded delegated workers and independent QA, and separately designs validated project-specific agent environments.",
+  "author": {
+    "name": "Liam"
+  },
+  "keywords": [
+    "agents",
+    "delegation",
+    "orchestration",
+    "research",
+    "code-review",
+    "codex",
+    "claude"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agentic Engineering",
+    "shortDescription": "Delegated task execution",
+    "longDescription": "Complete research, coding, analysis, writing, and other substantive work through bounded delegated agents and independent QA; also design validated project agent environments.",
+    "developerName": "Liam",
+    "category": "Productivity",
+    "capabilities": [
+      "Delegated execution",
+      "Independent QA",
+      "Agent network design"
+    ],
+    "defaultPrompt": [
+      "Research this question with delegated source gathering, produce the requested artifact, and verify every material claim.",
+      "Implement this change with bounded worker ownership and an independent review pass.",
+      "Design the smallest justified agent environment for this project and show the preflight diff."
+    ]
+  }
+}

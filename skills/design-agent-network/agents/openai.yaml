@@ -1,0 +1,7 @@
+interface:
+  display_name: "Design an agent network"
+  short_description: "Derive and emit a validated agent network"
+  default_prompt: "Design the smallest justified agent environment for this project and show the exact preflight diff before writing."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,55 @@
+{
+  "description": "Routes explicit Agentic Engineering invocations and prevents silent completion without a delegated worker.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PLUGIN_ROOT}/scripts/invocation_guard.py\"",
+            "commandWindows": "python \"$env:CLAUDE_PLUGIN_ROOT\\scripts\\invocation_guard.py\"",
+            "timeout": 10,
+            "statusMessage": "Routing Agentic Engineering invocation"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PLUGIN_ROOT}/scripts/invocation_guard.py\"",
+            "commandWindows": "python \"$env:CLAUDE_PLUGIN_ROOT\\scripts\\invocation_guard.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PLUGIN_ROOT}/scripts/invocation_guard.py\"",
+            "commandWindows": "python \"$env:CLAUDE_PLUGIN_ROOT\\scripts\\invocation_guard.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PLUGIN_ROOT}/scripts/invocation_guard.py\"",
+            "commandWindows": "python \"$env:CLAUDE_PLUGIN_ROOT\\scripts\\invocation_guard.py\"",
+            "timeout": 10,
+            "statusMessage": "Verifying delegated execution"
+          }
+        ]
+      }
+    ]
+  }
+}

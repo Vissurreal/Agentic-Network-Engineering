@@ -1,0 +1,74 @@
+{
+  "schema": "agentic-engineering-invocation/v1",
+  "plugin": "agentic-engineering",
+  "explicit_markers": [
+    "@agentic-engineering",
+    "plugin://agentic-engineering",
+    "$execute-delegated-task",
+    "$agentic-engineering:execute-delegated-task",
+    "/execute-delegated-task",
+    "/agentic-engineering:execute-delegated-task",
+    "$design-agent-network",
+    "$agentic-engineering:design-agent-network",
+    "/design-agent-network",
+    "/agentic-engineering:design-agent-network"
+  ],
+  "direct_skill_marker_precedence": true,
+  "routes": {
+    "network-design": {
+      "skill": "design-agent-network",
+      "minimum_dispatches": 1,
+      "primary_roles": [
+        "network-architect"
+      ]
+    },
+    "research": {
+      "skill": "execute-delegated-task",
+      "minimum_dispatches": 1,
+      "primary_roles": [
+        "task-researcher",
+        "task-reviewer"
+      ]
+    },
+    "implementation": {
+      "skill": "execute-delegated-task",
+      "minimum_dispatches": 1,
+      "primary_roles": [
+        "task-implementer",
+        "task-reviewer"
+      ]
+    },
+    "analysis": {
+      "skill": "execute-delegated-task",
+      "minimum_dispatches": 1,
+      "primary_roles": [
+        "task-researcher",
+        "task-reviewer"
+      ]
+    },
+    "general": {
+      "skill": "execute-delegated-task",
+      "minimum_dispatches": 1,
+      "primary_roles": [
+        "task-worker",
+        "task-reviewer"
+      ]
+    }
+  },
+  "completion": {
+    "dispatch_before_final": true,
+    "integrate_worker_output": true,
+    "complete_user_task": true,
+    "qa_substantive_work": true,
+    "allow_scope_refusal": false,
+    "unavailable_disclosure": "Delegation unavailable in this runtime",
+    "unavailable_fallback_operator_env": "AGENTIC_ENGINEERING_ALLOW_DIRECT_FALLBACK",
+    "require_completed_worker_lifecycle": true
+  },
+  "limits": {
+    "default_concurrency": 3,
+    "maximum_concurrency": 4,
+    "same_file_parallel_writers": 1,
+    "stop_retries": 1
+  }
+}
